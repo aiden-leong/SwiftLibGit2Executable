@@ -35,5 +35,12 @@ class Blob {
         return (error_code, id.pointee)
     }
     
+    static func create_from_workdir(repo: OpaquePointer, relativePathString: String) -> (Int32, git_oid) {
+        let id = UnsafeMutablePointer<git_oid>.allocate(capacity: 1)
+        let relativePath = UnsafePointer<Int8>(relativePathString)
+        let error_code = git_blob_create_fromworkdir(id, repo, relativePath )
+        return (error_code, id.pointee)
+    }
+    
     
 }
