@@ -35,5 +35,9 @@ class Blame {
         }
     }
     
+    static func free(blame: OpaquePointer) {
+        git_blame_free(blame)
+    }
+    
     
 }
