@@ -47,5 +47,9 @@ class Blame {
         git_blame_get_hunk_byline(blame, lineno).pointee
     }
     
+    static func get_hunk_count(blame: OpaquePointer) -> UInt32 {
+        git_blame_get_hunk_count(blame)
+    }
+    
     
 }
