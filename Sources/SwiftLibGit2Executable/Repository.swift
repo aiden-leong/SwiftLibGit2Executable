@@ -10,6 +10,18 @@ import Foundation
 
 class Repository {
     
+    static func head(repo: OpaquePointer) -> OpaquePointer? {
+        let out = UnsafeMutablePointer<OpaquePointer?>.allocate(capacity: 1)
+        let errorCode = git_repository_head(out, repo)
+        switch errorCode {
+        case 0:
+            return out.pointee!
+        default:
+            print("git_repository_head Error Code: \(errorCode)")
+            return nil
+        }
+    }
+    
     static func initialize(pathString: String, is_bare: Bool) -> OpaquePointer? {
         let out = UnsafeMutablePointer<OpaquePointer?>.allocate(capacity: 1)
         let repo: OpaquePointer? = nil
