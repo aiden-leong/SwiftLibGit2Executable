@@ -15,5 +15,12 @@ class Blob {
         return (error_code, id.pointee)
     }
     
+    static func create_from_disk(repo: OpaquePointer, pathString: String) -> (Int32, git_oid) {
+        let id = UnsafeMutablePointer<git_oid>.allocate(capacity: 1)
+        let path = UnsafePointer<Int8>(pathString)
+        let error_code = git_blob_create_fromdisk(id, repo, path)
+        return (error_code, id.pointee)
+    }
+    
     
 }
