@@ -59,13 +59,13 @@ class Remote {
         git_remote_free(remote)
     }
     
-    static func ls(remote: OpaquePointer!) -> (git_remote_head, Int)? {
+    static func ls(remote: OpaquePointer!) -> (UnsafeMutablePointer<UnsafeMutablePointer<UnsafePointer<git_remote_head>?>?>, Int)? {
         let out = UnsafeMutablePointer<UnsafeMutablePointer<UnsafePointer<git_remote_head>?>?>.allocate(capacity: 1)
-        let size = UnsafeMutablePointer<Int>.allocate(capacity: 1)
-        let errorCode = git_remote_ls(out, size, remote)
+        var size:Int = 0
+        let errorCode = git_remote_ls(out, &size, remote)
         switch errorCode {
         case 0:
-            return (out.pointee!.pointee!.pointee, size.pointee)
+            return (out, size)
         default:
             print("git_remote_ls Error Code: \(errorCode)")
             return nil

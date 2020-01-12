@@ -12,7 +12,7 @@ func test_git_ls_remote() {
     _ = Remote.connect(remote: remote!)
     Remote.disconnect(remote: remote)
     let out = Remote.ls(remote: remote)
-    let x = out?.0.name!
+    let x = out!.0.pointee?[1]?.pointee.name
     print(String(cString: x!))
     Remote.free(remote: remote!)
     LibGit2.shutdown()
