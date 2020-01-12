@@ -22,5 +22,12 @@ class Blob {
         return (error_code, id.pointee)
     }
     
+    static func create_from_stream(repo: OpaquePointer, streamString: String) -> (Int32, git_writestream) {
+        var id = UnsafeMutablePointer<git_writestream>.allocate(capacity: 1)
+        let stream = UnsafePointer<Int8>(streamString)
+        let error_code = git_blob_create_fromstream(&id, repo, stream)
+        return (error_code, id.pointee)
+    }
+    
     
 }
