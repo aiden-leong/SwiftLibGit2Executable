@@ -51,5 +51,11 @@ class Blame {
         git_blame_get_hunk_count(blame)
     }
     
+    static func init_options(version: UInt32) -> git_blame_options {
+        let opts = UnsafeMutablePointer<git_blame_options>.allocate(capacity: 1)
+        git_blame_init_options(opts, version)
+        return opts.pointee
+    }
+    
     
 }
