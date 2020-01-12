@@ -42,5 +42,11 @@ class Blob {
         return (error_code, id.pointee)
     }
     
+    static func dup(source: OpaquePointer) -> (Int32, OpaquePointer?) {
+        var out: OpaquePointer? = nil
+        let error_code = git_blob_dup(&out, source)
+        return (error_code, out)
+    }
+    
     
 }
