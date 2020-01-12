@@ -17,7 +17,20 @@ class Blame {
         case 0:
             return out
         default:
-            print("git_repository_head Error Code: \(errorCode)")
+            print("git_blame_buffer Error Code: \(errorCode)")
+            return nil
+        }
+    }
+    
+    static func file(repo: OpaquePointer, pathString: String, options: UnsafeMutablePointer<git_blame_options>) -> OpaquePointer? {
+        var out: OpaquePointer? = nil
+        let path = UnsafePointer<Int8>(pathString)
+        let errorCode = git_blame_file(&out, repo, path, options)
+        switch errorCode {
+        case 0:
+            return out
+        default:
+            print("git_blame_file Error Code: \(errorCode)")
             return nil
         }
     }
