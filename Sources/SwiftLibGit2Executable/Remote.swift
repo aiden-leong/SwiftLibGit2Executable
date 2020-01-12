@@ -10,7 +10,15 @@ import Clibgit2
 class Remote {
     
     static func connect(remote: OpaquePointer) -> Int32 {
-        let errorCode = git_remote_connected(remote)
+        let errorCode = git_remote_connect(remote, GIT_DIRECTION_FETCH, nil, nil, nil)
+        if errorCode != 0 {
+            print("git_remote_connected Error Code: \(errorCode)")
+        }
+        return errorCode
+    }
+    
+    static func connect(remote: OpaquePointer, direction: git_direction) -> Int32 {
+        let errorCode = git_remote_connect(remote, direction, nil, nil, nil)
         if errorCode != 0 {
             print("git_remote_connected Error Code: \(errorCode)")
         }
@@ -26,6 +34,19 @@ class Remote {
             return out.pointee!
         default:
             print("git_remote_create_anonymous Error Code: \(errorCode)")
+            return nil
+        }
+    }
+    
+    static func create_detached(urlString: String) -> OpaquePointer? {
+        let out = UnsafeMutablePointer<OpaquePointer?>.allocate(capacity: 1)
+        let url = UnsafePointer<Int8>(urlString)
+        let errorCode = git_remote_create_detached(out, url)
+        switch errorCode {
+        case 0:
+            return out.pointee!
+        default:
+            print("git_remote_create_detached Error Code: \(errorCode)")
             return nil
         }
     }
