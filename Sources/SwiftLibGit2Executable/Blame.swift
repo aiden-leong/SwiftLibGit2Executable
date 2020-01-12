@@ -43,5 +43,9 @@ class Blame {
         git_blame_get_hunk_byindex(blame, index).pointee
     }
     
+    static func get_hunk_byline(blame: OpaquePointer, lineno: Int) -> git_blame_hunk? {
+        git_blame_get_hunk_byline(blame, lineno).pointee
+    }
+    
     
 }
