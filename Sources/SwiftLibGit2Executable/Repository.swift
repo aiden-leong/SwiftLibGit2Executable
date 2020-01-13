@@ -39,8 +39,8 @@ class Repository {
         }
     }
     
-    static func free(repo: OpaquePointer) {
-        git_repository_free(repo)
+    static func free(repo: UnsafeMutablePointer<OpaquePointer?>) {
+        git_repository_free(repo.pointee)
     }
     
     

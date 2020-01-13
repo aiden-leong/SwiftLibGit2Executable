@@ -18,4 +18,25 @@ func test_git_ls_remote() {
     LibGit2.shutdown()
 }
 
-test_git_ls_remote()
+func test_git_clone() {
+    
+    var errorCode: Int32 = 0
+    
+    LibGit2.initialize()
+    let localPathString = "/Users/ailion/test/Clibgit2"
+    let urlString = "https://github.com/andy1247008998/Clibgit2.git"
+    
+    var repo: OpaquePointer? = nil
+    var options = git_clone_options()
+    options.version = 2
+    
+    errorCode = git_clone(&repo, urlString, localPathString, nil)
+    print(errorCode)
+    
+    Repository.free(repo: &repo)
+    LibGit2.shutdown()
+}
+
+test_git_clone()
+
+//test_git_ls_remote()
